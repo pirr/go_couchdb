@@ -27,8 +27,28 @@ func TestExsits(t *testing.T) {
 func TestSave(t *testing.T) {
 	TestCreate(t)
 	m := make(map[string]interface{})
-	m["foo"] = "Foo"
 	m["bar"] = "Bar"
+	m["foo"] = map[string]map[string]interface{}{
+		"product1": map[string]interface{}{
+			"id":       "p01",
+			"name":     "name 1",
+			"price":    4.5,
+			"quantity": 10,
+			"arr":      []string{"1", "2"},
+		},
+		"product2": map[string]interface{}{
+			"id":       "p02",
+			"name":     "name 3",
+			"price":    6,
+			"quantity": 4,
+		},
+		"product3": map[string]interface{}{
+			"id":       "p03",
+			"name":     "name 3",
+			"price":    13,
+			"quantity": 9,
+		},
+	}
 	db.Save(m)
 }
 
