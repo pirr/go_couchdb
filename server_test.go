@@ -49,6 +49,7 @@ func TestSave(t *testing.T) {
 			"quantity": 9,
 		},
 	}
+	m["_id"] = "foo_test"
 	db.Save(m)
 }
 
@@ -72,7 +73,20 @@ func TestAllDocs(t *testing.T) {
 	total_rows_int := int(total_rows)
 	if total_rows_int != 1 {
 		t.Error("Expected total rows 1 got", total_rows_int)
+	}
+	TestDelete(t)
+}
+
+func TestGetDocByID(t *testing.T) {
+	TestCreate(t)
+	TestSave(t)
+	data, err := db.GetDocByID("foo_test")
+	if err != nil {
+		t.Error(err)
 		TestDelete(t)
+	}
+	if data["_id"] != "foo_test" {
+		t.Error("Expexted doc with id 'foo_test' got", data["_id"])
 	}
 	TestDelete(t)
 }
