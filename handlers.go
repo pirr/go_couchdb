@@ -5,6 +5,14 @@ import (
 	"net/http"
 )
 
+// NotExists struct used in Error handler
+type NotExists struct {
+	Op     string
+	DBName string
+}
+
+func (e *NotExists) Error() string { return `Not exists` + ` ` + e.DBName }
+
 func check(err error) {
 	if err != nil {
 		log.Fatal(err)

@@ -11,8 +11,8 @@ var db couchdb.Database
 
 func TestCreate(t *testing.T) {
 	db = *server.Create(`go-test`)
-	if *db.Url != `http://127.0.0.1:5984/go-test` {
-		t.Error("Expected http://127.0.0.1:5984/go-test, got ", db.Url)
+	if *db.URL != `http://127.0.0.1:5984/go-test` {
+		t.Error("Expected http://127.0.0.1:5984/go-test, got ", db.URL)
 	}
 }
 
