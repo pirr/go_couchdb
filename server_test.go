@@ -17,6 +17,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestExsits(t *testing.T) {
+	TestCreate(t)
 	err := server.ExistsDB(`go-test`)
 	if err != nil {
 		t.Error(err)
@@ -24,6 +25,7 @@ func TestExsits(t *testing.T) {
 }
 
 func TestSave(t *testing.T) {
+	TestCreate(t)
 	m := make(map[string]interface{})
 	m["foo"] = "Foo"
 	m["bar"] = "Bar"
@@ -31,6 +33,7 @@ func TestSave(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
+	TestCreate(t)
 	err := server.Delete(`go-test`)
 	if err != nil {
 		t.Error(err)
