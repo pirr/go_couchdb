@@ -77,7 +77,7 @@ func TestAllDocs(t *testing.T) {
 	TestDelete(t)
 }
 
-func TestGetDocByID(t *testing.T) {
+func TestGetByID(t *testing.T) {
 	TestCreate(t)
 	TestSave(t)
 	data, err := db.GetDocByID("foo_test")
@@ -87,6 +87,24 @@ func TestGetDocByID(t *testing.T) {
 	}
 	if data["_id"] != "foo_test" {
 		t.Error("Expexted doc with id 'foo_test' got", data["_id"])
+	}
+	TestDelete(t)
+}
+
+func TestFind(t *testing.T) {
+	TestCreate(t)
+	TestSave(t)
+	q := `
+		"selector": {
+			"_id": "foo_test"
+			}
+	`
+	res, _ := db.Find(q)
+	doc := res[0].(map[string]interface{})
+	doc_foo := doc["foo"].(map[string]interface{})
+	product1 := doc_foo["product1"].(map[string]interface{})
+	if product1["id"] != "p01" {
+		t.Error("Expected doc with 'product1.id == p01' got", product1["id"])
 	}
 	TestDelete(t)
 }

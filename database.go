@@ -45,3 +45,20 @@ func (db *Database) AllDocs() (map[string]interface{}, error) {
 	check(err)
 	return result, err
 }
+
+// Find - get docs by query (mango query)
+func (db *Database) Find(query string) ([]interface{}, error) {
+	queryBytes := []byte(`{` + query + `}`)
+	queryBuffer := new(bytes.Buffer)
+	err := json.Compact(queryBuffer, queryBytes)
+	check(err)
+	response, err := http.Post(*db.URL+"/_find", "application/json", queryBuffer)
+	check(err)
+	checkExists(response)
+	defer response.Body.Close()
+	data, err := ioutil.ReadAll(response.Body)
+	check(err)
+	var results map[string]interface{}
+	err = json.Unmarshal(data, &results)
+	return results["docs"].([]interface{}), err
+}
