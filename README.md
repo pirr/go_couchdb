@@ -9,7 +9,7 @@ simple client to work with CouchDB 2.x with Go
 ```db = *server.Create("go-test")```
 
 ### Save doc:
-```
+```go
 m := make(map[string]interface{})
 m["bar"] = "Bar"
 m["foo"] = map[string]map[string]interface{}{
@@ -38,7 +38,7 @@ db.Save(m)
 ```
 
 ### Delete database
-```
+```go
 err := server.Delete(`go-test`)
 if err != nil {
   t.Error(err)
@@ -46,7 +46,7 @@ if err != nil {
 ```
 
 ### Find (mango query)
-```
+```go
 q := `
   "selector": {
     "_id": "foo_test"
